@@ -1,5 +1,7 @@
 # Gradient Explorer
 
+![CI](https://github.com/CodingBunny06/Gradient-Explorer/actions/workflows/tests.yml/badge.svg)
+
 ### Interactive Mathematical Visualisation of Gradient and Steepest Ascent
 
 <p align="center">
