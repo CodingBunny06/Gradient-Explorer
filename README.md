@@ -23,19 +23,19 @@ Gradient Explorer is a Python application for exploring scalar functions of two 
 For a scalar function f(x, y), the gradient is:
 
 \[
-\nabla f(x,y)=\left(\frac{\partial f}{\partial x},\frac{\partial f}{\partial y}\right)
+\\nabla f(x,y)=\\left(\\frac{\\partial f}{\\partial x},\\frac{\\partial f}{\\partial y}\\right)
 \]
 
 Its magnitude gives the maximum local rate of increase. When the magnitude is non-zero, the normalized gradient gives the direction of steepest ascent:
 
 \[
-\hat{u}_{\mathrm{ascent}}=\frac{\nabla f}{\lVert\nabla f\rVert}
+\\hat{u}_{\\mathrm{ascent}}=\\frac{\\nabla f}{\\lVert\\nabla f\\rVert}
 \]
 
 The directional derivative along a unit vector u is:
 
 \[
-D_{\mathbf{u}}f=\nabla f\cdot\mathbf{u}
+D_{\\mathbf{u}}f=\\nabla f\\cdot\\mathbf{u}
 \]
 
 At a zero-gradient point, the unit gradient is undefined.
@@ -93,14 +93,18 @@ python -m pytest -v
 
 ```text
 Gradient-Explorer/
-├── .github/workflows/tests.yml
+├── .github/
+│   └── workflows/
+│       └── tests.yml
 ├── docs/
 │   ├── architecture.md
 │   ├── math_test_cases.md
 │   └── project_report.md
 ├── tests/
 │   ├── test_calculations.py
-│   └── test_equation_parser.py
+│   ├── test_equation_parser.py
+│   ├── test_parser_limits.py
+│   └── test_visualizations.py
 ├── app.py
 ├── calculations.py
 ├── equation_parser.py
@@ -147,3 +151,4 @@ This is an individual academic project. Changes are developed on feature branche
 - **Author:** CodingBunny06
 
 ---
+
