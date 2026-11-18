@@ -103,13 +103,23 @@ python -m pytest -v
 ```text
 Gradient-Explorer/
 ├── .github/
-│   └── workflows/
-│       └── tests.yml
+│   ├── ISSUE_TEMPLATE/
+│   │   ├── bug_report.yml
+│   │   ├── config.yml
+│   │   └── feature_request.yml
+│   ├── workflows/
+│   │   └── tests.yml
+│   ├── dependabot.yml
+│   └── pull_request_template.md
 ├── docs/
 │   ├── architecture.md
 │   ├── deployment.md
 │   ├── math_test_cases.md
 │   └── project_report.md
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+├── SECURITY.md
+├── SUPPORT.md
 ├── tests/
 │   ├── test_calculations.py
 │   ├── test_equation_parser.py
