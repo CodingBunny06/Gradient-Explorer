@@ -2,176 +2,148 @@
 
 ![CI](https://github.com/CodingBunny06/Gradient-Explorer/actions/workflows/tests.yml/badge.svg)
 
-### Interactive Mathematical Visualisation of Gradient and Steepest Ascent
+**Interactive mathematical visualisation of gradients and steepest ascent**
 
-<p align="center">
-  An Engineering Mathematics-I working model demonstrating partial differentiation, gradient vectors, and the direction of steepest ascent through interactive visualisations.
-</p>
+Gradient Explorer is a Python application for exploring scalar functions of two variables. Enter a function, select a point, calculate its gradient, and inspect the result using contour, heatmap, and 3D surface visualisations.
 
----
+## Features
 
-## 1. About the Project
+- Allowlist-based equation parser for safe mathematical input
+- Symbolic partial derivatives with respect to x and y
+- Numerical function and gradient evaluation at a selected point
+- Gradient vector, magnitude, unit ascent direction, and descent direction
+- Directional derivative along a user-selected direction
+- Contour plot with sampled gradient vector field and selected point
+- Function heatmap and 3D surface plot
+- Explicit handling of zero gradients and undefined/non-real evaluations
+- Automated tests and GitHub Actions CI
 
-Gradient Explorer is an interactive mathematical application designed to demonstrate how a function of two variables changes across a surface.
+## Mathematical foundation
 
-Users will be able to enter mathematical functions, calculate their partial derivatives, determine gradient vectors and gradient magnitudes, and visualise the results through heatmaps, contour lines, and gradient arrows.
+For a scalar function f(x, y), the gradient is:
 
-**Main objective:** To demonstrate the mathematical concept of gradients and identify the direction in which a function increases most rapidly.
+\[
+\nabla f(x,y)=\left(\frac{\partial f}{\partial x},\frac{\partial f}{\partial y}\right)
+\]
 
-## 2. Mathematical Concepts
+Its magnitude gives the maximum local rate of increase. When the magnitude is non-zero, the normalized gradient gives the direction of steepest ascent:
 
-The project focuses on the following Engineering Mathematics-I concepts:
+\[
+\hat{u}_{\mathrm{ascent}}=\frac{\nabla f}{\lVert\nabla f\rVert}
+\]
 
-- Functions of two variables
-- Partial differentiation
-- Gradient of a scalar function
-- Gradient vector and magnitude
-- Directional derivatives
-- Direction of steepest ascent and descent
-- Contour lines and their relationship with gradients
+The directional derivative along a unit vector u is:
 
-## 3. Planned Features
+\[
+D_{\mathbf{u}}f=\nabla f\cdot\mathbf{u}
+\]
 
-| Feature | Description |
+At a zero-gradient point, the unit gradient is undefined.
+
+## Supported equation syntax
+
+| Category | Supported input |
 |---|---|
-| Custom Equation Input | Enter mathematical functions of two variables |
-| Partial Derivatives | Calculate derivatives with respect to x and y |
-| Gradient Calculation | Calculate the gradient vector |
-| Gradient Magnitude | Determine the maximum rate of increase |
-| Heatmap | Visualise function values using colours |
-| Contour Plot | Display curves of constant function values |
-| Gradient Arrows | Visualise the direction of steepest ascent |
-| Point Selection | Evaluate the gradient at a selected point |
-| Steepest-Ascent Path | Illustrate movement in the uphill direction |
+| Variables | x, y |
+| Constants | pi, E |
+| Functions | sin, cos, tan, exp, log, sqrt, abs |
+| Operators | +, -, *, /, ** |
+| Power alias | ^ |
 
-*Features will be implemented progressively.*
+Multiplication must be explicit (write 2*x, not 2x). Functions accept one argument. Expressions are limited in length, syntax-tree size, nesting depth, and numeric exponent magnitude.
 
-## 4. Technology Stack
+## Technology stack
 
 | Technology | Purpose |
 |---|---|
-| Python | Main programming language |
-| SymPy | Symbolic differentiation and mathematical expressions |
-| NumPy | Numerical calculations and coordinate grids |
-| Matplotlib | Heatmaps, contour plots and vector visualisations |
-| Streamlit | Interactive web application |
-| pytest | Testing mathematical calculations |
-| Git & GitHub | Version control and collaboration |
+| Python | Application logic |
+| SymPy | Symbolic mathematics |
+| NumPy | Numerical grids and array operations |
+| Matplotlib | Contour, heatmap, vector-field, and surface plots |
+| Streamlit | Interactive web interface |
+| Pytest | Automated testing |
+| GitHub Actions | Continuous integration |
 
-## 5. Development Environment
+## Run locally
 
-Our development tools will include:
+Python 3.12 is used by the CI workflow.
 
-- **Visual Studio Code:** Writing and managing project code.
-- **Terminal:** Installing dependencies and running commands.
-- **Web Browser:** Accessing the application through localhost.
-- **GitHub:** Hosting source code and tracking development.
-- **Google Colab (optional):** Experimenting with Python calculations.
+```bash
+git clone https://github.com/CodingBunny06/Gradient-Explorer.git
+cd Gradient-Explorer
 
-## 6. How the Application Works
+python3 -m venv .venv
+source .venv/bin/activate        # macOS / Linux
+# .venv\Scripts\activate       # Windows
 
-The proposed application follows this workflow:
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+streamlit run app.py
+```
 
-1. The user enters a mathematical function of two variables.
-2. SymPy calculates the partial derivatives.
-3. The application constructs the gradient vector.
-4. NumPy performs numerical calculations over a coordinate grid.
-5. Matplotlib generates heatmaps, contour plots and gradient arrows.
-6. Streamlit presents the calculations and visualisations through an interactive interface.
+Open the local URL printed by Streamlit (usually http://localhost:8501).
 
-## 7. Role of AI
+## Run tests
 
-AI tools such as ChatGPT and Google Gemini will be used as development assistants for:
+```bash
+python -m pytest -v
+```
 
-- Understanding mathematical concepts.
-- Assistance with Python programming.
-- Debugging and troubleshooting.
-- Reviewing mathematical calculations.
-- Generating test cases.
-- Improving documentation and presentation material.
-
-**Important:** AI will assist the development process. The actual mathematical calculations and visualisations will be performed by our Python application.
-
-## 8. Team Responsibilities
-
-| Member | Responsibility |
-|---|---|
-| Member 1 | Mathematical concepts, formulas and verification |
-| Member 2 | Python backend and SymPy calculations |
-| Member 3 | Heatmaps, contour plots and gradient visualisation |
-| Member 4 | Streamlit interface, integration and testing |
-
-All members will participate in understanding the mathematical concepts and final project demonstration.
-
-## 9. Development Roadmap
-
-| Stage | Task |
-|---|---|
-| 1 | Understand the mathematics and finalise requirements |
-| 2 | Set up Python environment and dependencies |
-| 3 | Implement partial derivatives and gradient calculations |
-| 4 | Develop mathematical visualisations |
-| 5 | Build the interactive Streamlit interface |
-| 6 | Integrate components and test different functions |
-| 7 | Prepare documentation, report and presentation |
-
-## 10. Project Structure
-
-Planned folder structure:
+## Project structure
 
 ```text
 Gradient-Explorer/
-│
+├── .github/workflows/tests.yml
+├── docs/
+│   ├── architecture.md
+│   ├── math_test_cases.md
+│   └── project_report.md
+├── tests/
+│   ├── test_calculations.py
+│   └── test_equation_parser.py
 ├── app.py
 ├── calculations.py
+├── equation_parser.py
 ├── visualizations.py
 ├── requirements.txt
-├── README.md
-│
-├── tests/
-│   └── test_calculations.py
-│
-├── screenshots/
-│
-└── docs/
-    └── project_report.md
+└── README.md
 ```
 
-## 11. Example Mathematical Function
+## Architecture
 
-Consider the function:
+1. Streamlit collects the function, point, and plot range.
+2. equation_parser.py validates the expression using an allowlist and converts it to SymPy.
+3. calculations.py differentiates the expression symbolically and evaluates function/gradient values.
+4. visualizations.py samples the function and derivatives over a NumPy grid and creates Matplotlib figures.
+5. app.py presents numerical results and interactive plot tabs.
 
-\[
-f(x,y)=x^2+y^2
-\]
+See [docs/architecture.md](docs/architecture.md) for module responsibilities and data flow.
 
-Its gradient is:
+## Example
 
-\[
-\nabla f(x,y)=(2x,2y)
-\]
+For f(x,y) = x² + y² at (1,2):
 
-At the point \((1,2)\):
+- Partial derivatives: ∂f/∂x = 2x and ∂f/∂y = 2y
+- Gradient: (2,4)
+- Magnitude: √20 ≈ 4.4721
+- Unit ascent direction: (1/√5, 2/√5)
 
-\[
-\nabla f(1,2)=(2,4)
-\]
+## Limitations
 
-The gradient indicates the direction of steepest increase, while its magnitude represents the maximum rate of increase.
+- The parser intentionally supports a restricted mathematical language; arbitrary Python and implicit multiplication are not supported.
+- Numerical plots mask undefined or non-finite regions.
+- Symbolic expressions that are valid mathematically may still be outside the real-valued domain at a selected point.
+- The application is an educational visualisation tool, not a computer algebra system replacement.
 
-The application will allow users to explore such mathematical relationships interactively.
+## Development
+
+This is an individual academic project. Changes are developed on feature branches, tested, and reviewed through pull requests before being merged into main.
+
+## Project information
+
+- **Project:** Gradient Explorer
+- **Subject context:** Engineering Mathematics-I
+- **Type:** Interactive mathematical working model
+- **Author:** CodingBunny06
 
 ---
-
-## 12. Project Information
-
-- **Project Name:** Gradient Explorer
-- **Subject:** Engineering Mathematics-I
-- **Project Type:** Interactive Mathematical Working Model
-- **Programming Language:** Python
-- **Team Size:** 4 Members
-- **Development Status:** Planning
-
----
-
-*Built as an academic project to explore and visualise the mathematics of gradients.*
