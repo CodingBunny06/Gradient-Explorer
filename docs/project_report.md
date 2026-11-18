@@ -1,233 +1,135 @@
-
 # Gradient Explorer
 ## Project Report
 
-**Project Title:** Gradient Explorer – Interactive Mathematical Visualisation of Gradient and Steepest Ascent
+**Project title:** Gradient Explorer — Interactive Mathematical Visualisation of Gradient and Steepest Ascent  
+**Project type:** Engineering Mathematics-I mini project  
+**Implementation:** Python, SymPy, NumPy, Matplotlib, Streamlit and Pytest  
+**Author:** CodingBunny06
 
-**Project Type:** Engineering Mathematics Mini Project
+## 1. Abstract
 
-**Technology:** Python, SymPy, NumPy, Matplotlib and Streamlit
+Gradient Explorer is an interactive application for studying gradients of scalar functions of two variables. It accepts a mathematical expression and an evaluation point, calculates symbolic partial derivatives and numerical gradient properties, and presents the function through contour, heatmap, and three-dimensional surface plots.
 
----
+The application connects the analytical definition of the gradient with its geometric interpretation as the direction of steepest local increase.
 
-# 1. Abstract
+## 2. Problem statement
 
-Gradient Explorer is an interactive mathematical visualisation project designed to demonstrate the concept of gradients and steepest ascent for functions of two variables.
+Students may find it difficult to connect partial derivative calculations with the geometry of a function surface. Gradient Explorer provides a visual and numerical environment for exploring these relationships at selected points and over a coordinate region.
 
-The project aims to help students understand how partial derivatives are used to calculate the gradient vector at a given point on a surface. It also aims to demonstrate gradient magnitude, direction and the relationship between gradients and contour lines.
+## 3. Objectives
 
-The application is being developed using Python and its mathematical libraries, with Streamlit providing the user interface.
+1. Accept functions of two variables.
+2. Validate supported mathematical expressions safely.
+3. Calculate symbolic partial derivatives.
+4. Evaluate the function and gradient at a selected point.
+5. Calculate gradient magnitude and unit ascent direction.
+6. Calculate directional derivatives.
+7. Visualise the function using contour, heatmap, gradient-field, and 3D surface plots.
+8. Handle zero-gradient and undefined/non-real cases.
+9. Verify behaviour with automated tests.
 
-The current implementation includes a Streamlit interface and a safe mathematical equation parser. The mathematical calculation and visualisation modules are planned components of the project.
+## 4. Mathematical foundation
 
-# 2. Introduction
+For a scalar function f(x,y), the gradient is:
 
-Calculus plays an important role in engineering, mathematics and scientific applications.
+\[
+\nabla f(x,y)=\left(\frac{\partial f}{\partial x},\frac{\partial f}{\partial y}\right)
+\]
 
-For functions of two variables, partial derivatives describe how a function changes with respect to one variable while keeping the other variable constant.
+Its magnitude is:
 
-The gradient combines these partial derivatives into a vector that indicates the direction of the greatest rate of increase of a function.
+\[
+\lVert\nabla f\rVert=\sqrt{\left(\frac{\partial f}{\partial x}\right)^2+\left(\frac{\partial f}{\partial y}\right)^2}
+\]
 
-Gradient Explorer aims to make this mathematical concept easier to understand through an interactive software application.
+When the magnitude is non-zero, the unit gradient indicates steepest ascent:
 
-# 3. Problem Statement
+\[
+\hat{u}=\frac{\nabla f}{\lVert\nabla f\rVert}
+\]
 
-Students often find it difficult to visualise how partial derivatives, gradient vectors and steepest ascent relate to a mathematical surface.
+The directional derivative along a unit vector u is:
 
-Traditional mathematical calculations provide numerical answers but may not always make the geometric interpretation clear.
+\[
+D_{\mathbf{u}}f=\nabla f\cdot\mathbf{u}
+\]
 
-The project aims to develop an interactive application that accepts mathematical functions and coordinates, calculates gradient properties and presents their graphical interpretation.
+At a zero-gradient point, the unit gradient is undefined.
 
-# 4. Objectives
+## 5. Technology stack
 
-The main objectives are:
-
-1. Develop an interactive mathematical application.
-2. Accept functions of two variables, x and y.
-3. Validate mathematical expressions safely.
-4. Calculate partial derivatives.
-5. Determine gradient vectors at selected points.
-6. Calculate gradient magnitude and unit gradient vectors.
-7. Visualise functions using heatmaps and contour plots.
-8. Demonstrate the direction of steepest ascent.
-
-# 5. Mathematical Foundation
-
-## 5.1 Functions of Two Variables
-
-A function of two variables is represented as:
-
-f(x, y)
-
-It assigns a numerical value to each valid pair of input coordinates.
-
-## 5.2 Partial Derivatives
-
-The partial derivative with respect to x measures the rate of change of the function with respect to x while y remains constant.
-
-Similarly, the partial derivative with respect to y measures the rate of change with respect to y while x remains constant.
-
-## 5.3 Gradient Vector
-
-The gradient of a function is defined as:
-
-∇f(x,y) = (∂f/∂x, ∂f/∂y)
-
-It points in the direction of the steepest increase of the function.
-
-## 5.4 Gradient Magnitude
-
-The magnitude of the gradient is:
-
-|∇f| = √((∂f/∂x)² + (∂f/∂y)²)
-
-It represents the maximum rate of increase of the function at a point.
-
-## 5.5 Unit Gradient Vector
-
-The unit gradient vector is:
-
-u = ∇f / |∇f|
-
-It represents the direction of steepest ascent.
-
-This vector is undefined when the gradient magnitude is zero.
-
-# 6. Technology Stack
-
-| Technology | Application |
+| Technology | Role |
 |---|---|
-| Python | Main programming language |
-| Streamlit | Interactive user interface |
-| SymPy | Symbolic mathematics |
-| NumPy | Numerical calculations |
-| Matplotlib | Mathematical visualisation |
+| Python | Application logic |
+| Streamlit | User interface |
+| SymPy | Symbolic expressions and differentiation |
+| NumPy | Numerical coordinate grids |
+| Matplotlib | Mathematical visualisations |
 | Pytest | Automated testing |
-| Git and GitHub | Version control and collaboration |
 | GitHub Actions | Continuous integration |
 
-# 7. System Architecture
+## 6. System implementation
 
-The application follows a modular architecture.
+### 6.1 Equation parser
 
-The planned modules include:
+The parser converts user input into a SymPy expression through Python's AST module. It permits only a defined set of variables, constants, functions, and operators. It does not use eval to execute user input. Input length, syntax-tree size, nesting depth, and numeric exponent magnitude are bounded.
 
-- app.py: Main Streamlit application.
-- equation_parser.py: Mathematical expression validation.
-- calculations.py: Partial derivatives and gradient calculations.
-- visualizations.py: Heatmaps, contour plots and gradient vectors.
-- tests/: Automated testing.
-- docs/: Technical and mathematical documentation.
+### 6.2 Calculation engine
 
-The intended workflow begins with user input, followed by equation validation, mathematical calculations and graphical visualisation.
+The calculation module computes partial derivatives with SymPy and evaluates the function and derivative values at the selected point. It calculates gradient magnitude, unit ascent direction, and directional derivatives. Zero gradients are represented without division by zero; undefined or non-real point evaluations are reported.
 
-# 8. Implementation
+### 6.3 Visualisation engine
 
-## 8.1 Streamlit Interface
+The visualisation module evaluates the function and its derivatives over NumPy coordinate grids. It produces a contour plot with gradient arrows and a selected-point marker, a heatmap, and a three-dimensional surface. Non-finite grid values are masked.
 
-A basic Streamlit interface has been implemented to accept mathematical expressions and coordinate values.
+### 6.4 Streamlit interface
 
-The interface includes:
-- Mathematical equation input.
-- X-coordinate input.
-- Y-coordinate input.
-- Calculate Gradient button.
-- Equation validation feedback.
+The interface collects the expression, point, and plot range. It presents symbolic derivatives, numerical values, gradient direction, directional derivative controls, and plot tabs.
 
-## 8.2 Equation Parser
+## 7. Verification
 
-A mathematical equation parser has been implemented using Python's Abstract Syntax Tree (AST) module and SymPy.
+Automated tests cover:
+- Supported and unsupported equation syntax.
+- Mathematical reference cases for quadratic, linear, product, and saddle functions.
+- Symbolic partial derivatives.
+- Gradient magnitude and normalized direction.
+- Zero-gradient behaviour.
+- Undefined and non-real points.
+- Non-finite coordinates.
+- Directional derivatives and invalid direction vectors.
 
-It supports approved mathematical variables, constants, functions and operators.
+The repository's CI workflow runs Pytest on Python 3.12. The final verified test count and CI result should be recorded from the completed pull-request run rather than inferred from earlier development runs.
 
-The parser uses an allowlist-based validation approach instead of directly evaluating arbitrary user input.
+## 8. Example result
 
-## 8.3 Automated Testing
+For f(x,y) = x² + y² at (1,2):
 
-Pytest is used to verify equation parsing and validation.
+- ∂f/∂x = 2x
+- ∂f/∂y = 2y
+- Gradient = (2,4)
+- Magnitude = √20 ≈ 4.4721
+- Unit ascent direction = (1/√5, 2/√5)
 
-The current parser test suite contains 14 tests covering:
-- Basic mathematical expressions.
-- Exponent notation.
-- Supported mathematical functions.
-- Mathematical constants.
-- Invalid variables.
-- Unsupported functions and operators.
-- Invalid syntax.
-- Unsafe input handling.
-- Exponent restrictions.
+## 9. Limitations
 
-All 14 parser tests passed locally during development.
+- The equation parser supports a restricted mathematical syntax and does not support arbitrary Python, implicit multiplication, or every SymPy function.
+- Plots show numerical samples over a finite coordinate window.
+- A mathematically defined symbolic expression may be undefined or non-real at a selected point.
+- Visualisations are educational aids and use numerical approximations.
 
-## 8.4 Planned Implementation
+## 10. Future scope
 
-The following components remain under development:
+Potential extensions include gradient-ascent path tracing, additional supported functions, configurable plot sampling, and more advanced critical-point analysis.
 
-- Partial derivative calculations.
-- Gradient magnitude and unit vector calculations.
-- Heatmap and contour visualisations.
-- Gradient arrow visualisation.
-- Complete integration of mathematical and graphical modules.
+## 11. Conclusion
 
-# 9. Testing and Validation
+Gradient Explorer combines safe mathematical input, symbolic differentiation, numerical gradient evaluation, and graphical representations in one application. It helps users relate the gradient's analytical definition to its magnitude, direction, and geometric behaviour over a function surface.
 
-The project uses automated tests to verify the correctness of its equation parser.
+## 12. References
 
-A separate mathematical test specification has also been prepared to define expected results for the future gradient calculation engine.
-
-These mathematical test cases cover:
-- Partial derivatives.
-- Gradient components.
-- Gradient magnitude.
-- Unit gradient vectors.
-- Zero-gradient conditions.
-- Undefined and non-real results.
-
-The calculation engine will be tested against these expected mathematical results once implemented.
-
-# 10. Results and Discussion
-
-The current implementation demonstrates successful equation input and validation through the Streamlit interface.
-
-The parser has passed all 14 locally executed automated tests.
-
-The mathematical calculation and graphical visualisation stages are still under development. Therefore, final gradient calculation results and visualisation outputs are not yet available for evaluation.
-
-# 11. Limitations
-
-The current development stage has the following limitations:
-
-1. Gradient calculations are not yet integrated.
-2. Heatmap and contour visualisations are pending.
-3. Gradient vector arrows are pending.
-4. Complete end-to-end application testing remains pending.
-
-# 12. Future Scope
-
-Potential improvements include:
-
-- Interactive three-dimensional surface visualisation.
-- Directional derivative calculations.
-- Interactive gradient vector controls.
-- Additional mathematical functions.
-- Improved graph customisation.
-- Expanded mathematical test coverage.
-
-# 13. Conclusion
-
-Gradient Explorer is being developed as an interactive educational application to demonstrate gradients and steepest ascent for functions of two variables.
-
-The project has established its initial Streamlit interface, safe equation parsing system, automated parser tests and technical documentation.
-
-The remaining development work focuses on implementing the mathematical calculation engine, graphical visualisations and complete application integration.
-
-The project aims to provide students with a practical way to connect mathematical calculations with their geometric interpretation.
-
-# 14. References
-
-1. James Stewart, Calculus: Early Transcendentals.
-2. SymPy Documentation – https://docs.sympy.org/
-3. Streamlit Documentation – https://docs.streamlit.io/
-4. NumPy Documentation – https://numpy.org/doc/
-5. Matplotlib Documentation – https://matplotlib.org/stable/
-6. Pytest Documentation – https://docs.pytest.org/
+1. James Stewart, *Calculus: Early Transcendentals*.
+2. SymPy documentation — https://docs.sympy.org/
+3. Streamlit documentation — https://docs.streamlit.io/
+4. NumPy documentation — https://numpy.org/doc/
+5. Matplotlib documentation — https://matplotlib.org/stable/
+6. Pytest documentation — https://docs.pytest.org/
