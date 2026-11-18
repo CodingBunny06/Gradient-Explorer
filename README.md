@@ -64,6 +64,15 @@ Multiplication must be explicit (write 2*x, not 2x). Functions accept one argume
 | Pytest | Automated testing |
 | GitHub Actions | Continuous integration |
 
+## Deployment
+
+Gradient Explorer is prepared for deployment on **Streamlit Community Cloud**.
+
+- Deployment guide: [docs/deployment.md](docs/deployment.md)
+- Repository: [GitHub](https://github.com/CodingBunny06/Gradient-Explorer)
+
+The public app URL will be added here after deployment and smoke testing are complete.
+
 ## Run locally
 
 Python 3.12 is used by the CI workflow.
@@ -74,7 +83,7 @@ cd Gradient-Explorer
 
 python3 -m venv .venv
 source .venv/bin/activate        # macOS / Linux
-# .venv\Scripts\activate       # Windows
+# .venv\\Scripts\\activate       # Windows
 
 python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
@@ -98,6 +107,7 @@ Gradient-Explorer/
 │       └── tests.yml
 ├── docs/
 │   ├── architecture.md
+│   ├── deployment.md
 │   ├── math_test_cases.md
 │   └── project_report.md
 ├── tests/
@@ -151,4 +161,3 @@ This is an individual academic project. Changes are developed on feature branche
 - **Author:** CodingBunny06
 
 ---
-
