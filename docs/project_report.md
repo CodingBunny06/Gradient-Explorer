@@ -33,25 +33,25 @@ Students may find it difficult to connect partial derivative calculations with t
 For a scalar function f(x,y), the gradient is:
 
 \[
-\nabla f(x,y)=\left(\frac{\partial f}{\partial x},\frac{\partial f}{\partial y}\right)
+\\nabla f(x,y)=\\left(\\frac{\\partial f}{\\partial x},\\frac{\\partial f}{\\partial y}\\right)
 \]
 
 Its magnitude is:
 
 \[
-\lVert\nabla f\rVert=\sqrt{\left(\frac{\partial f}{\partial x}\right)^2+\left(\frac{\partial f}{\partial y}\right)^2}
+\\lVert\\nabla f\\rVert=\\sqrt{\\left(\\frac{\\partial f}{\\partial x}\\right)^2+\\left(\\frac{\\partial f}{\\partial y}\\right)^2}
 \]
 
 When the magnitude is non-zero, the unit gradient indicates steepest ascent:
 
 \[
-\hat{u}=\frac{\nabla f}{\lVert\nabla f\rVert}
+\\hat{u}=\\frac{\\nabla f}{\\lVert\\nabla f\\rVert}
 \]
 
 The directional derivative along a unit vector u is:
 
 \[
-D_{\mathbf{u}}f=\nabla f\cdot\mathbf{u}
+D_{\\mathbf{u}}f=\\nabla f\\cdot\\mathbf{u}
 \]
 
 At a zero-gradient point, the unit gradient is undefined.
@@ -97,8 +97,10 @@ Automated tests cover:
 - Undefined and non-real points.
 - Non-finite coordinates.
 - Directional derivatives and invalid direction vectors.
+- Parser resource limits, including expression length, syntax-tree size, nesting depth, and exponent magnitude.
+- Visualisation outputs, including constant functions and grids containing singular or non-finite values.
 
-The repository's CI workflow runs Pytest on Python 3.12. The final verified test count and CI result should be recorded from the completed pull-request run rather than inferred from earlier development runs.
+The GitHub Actions run for the implementation pull request completed successfully: **36 tests passed** on Python 3.12. The run is available at [GitHub Actions run #15](https://github.com/CodingBunny06/Gradient-Explorer/actions/runs/44284095884).
 
 ## 8. Example result
 
