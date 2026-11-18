@@ -22,8 +22,17 @@ with st.container(border=True):
         "Trigonometric surface": "sin(x) + cos(y)",
         "Exponential surface": "exp(-x**2 - y**2)",
     }
-    selected_example = st.selectbox("Example functions", ["Custom"] + list(examples))
-    equation = st.text_input("Function  f(x, y)", value=examples.get(selected_example, "x**2 + y**2"), key="equation_input",
+    if "equation_input" not in st.session_state:
+        st.session_state["equation_input"] = "x**2 + y**2"
+
+    def load_example():
+        choice = st.session_state["selected_example"]
+        if choice in examples:
+            st.session_state["equation_input"] = examples[choice]
+
+    selected_example = st.selectbox("Example functions", ["Custom"] + list(examples),
+                                    key="selected_example", on_change=load_example)
+    equation = st.text_input("Function  f(x, y)", key="equation_input",
         help="Use x and y, numeric constants, pi, E, +, -, *, /, ** and supported functions.")
     with st.expander("Equation syntax guide"):
         st.markdown("**Variables:** x, y  ·  **Constants:** pi, E  ·  **Functions:** sin, cos, tan, exp, log, sqrt, abs")
