@@ -2,6 +2,12 @@
 
 This guide describes how to publish Gradient Explorer using Streamlit Community Cloud.
 
+## Live application
+
+The deployed application is available at:
+
+**[https://gradient-explorer.streamlit.app/](https://gradient-explorer.streamlit.app/)**
+
 ## Deployment configuration
 
 | Setting | Value |
@@ -25,7 +31,7 @@ The application entrypoint and dependency file are both in the repository root, 
 7. Optionally choose a memorable app subdomain, such as `gradient-explorer`, if it is available.
 8. Select **Deploy** and wait for the build to finish.
 
-Streamlit assigns a `.streamlit.app` URL to the deployed app. Record the actual URL after deployment; do not add a guessed URL to project documentation.
+Streamlit assigns a `.streamlit.app` URL to the deployed app. The live URL above is the deployed address for this project.
 
 ## Post-deployment smoke test
 
@@ -47,7 +53,7 @@ Community Cloud monitors the connected GitHub repository. Commits pushed to the 
 
 ## Release checklist
 
-- [ ] Deployment completes successfully.
+- [x] Deployment completes successfully.
 - [ ] Public URL opens in a private browser window.
 - [ ] All smoke tests above pass.
 - [ ] Public URL is added to the README and repository About website field.
