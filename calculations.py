@@ -73,6 +73,8 @@ def calculate_gradient(
         raise CalculationError("The function is undefined at the selected point.") from error
 
     magnitude = math.hypot(gradient_x, gradient_y)
+    if not math.isfinite(magnitude):
+        raise CalculationError("Gradient magnitude exceeds the supported numeric range.")
     unit_gradient = (
         (gradient_x / magnitude, gradient_y / magnitude)
         if magnitude > 0.0
@@ -108,6 +110,8 @@ def calculate_directional_derivative(
     length = math.hypot(*components)
     if length == 0.0:
         raise CalculationError("Direction vector must be non-zero.")
+    if not math.isfinite(length):
+        raise CalculationError("Direction vector magnitude exceeds the supported numeric range.")
 
     result = calculate_gradient(expression, x_value, y_value)
     return result.gradient_x * components[0] / length + result.gradient_y * components[1] / length
