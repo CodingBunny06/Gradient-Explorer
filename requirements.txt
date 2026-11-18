@@ -1,1 +1,5 @@
-streamlit==1.67.0\nsympy==1.14.0\nnumpy==2.5.4\nmatplotlib==3.11.2\npytest==9.2.0\n
+streamlit==1.67.0
+sympy==1.14.0
+numpy==2.5.4
+matplotlib==3.11.2
+pytest==9.2.0
