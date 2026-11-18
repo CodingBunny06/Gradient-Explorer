@@ -1,10 +1,13 @@
 # Gradient Explorer
 
 ![CI](https://github.com/CodingBunny06/Gradient-Explorer/actions/workflows/tests.yml/badge.svg)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://gradient-explorer.streamlit.app/)
 
 **Interactive mathematical visualisation of gradients and steepest ascent**
 
 Gradient Explorer is a Python application for exploring scalar functions of two variables. Enter a function, select a point, calculate its gradient, and inspect the result using contour, heatmap, and 3D surface visualisations.
+
+**[Launch Gradient Explorer](https://gradient-explorer.streamlit.app/)**
 
 ## Features
 
@@ -66,16 +69,15 @@ Multiplication must be explicit (write 2*x, not 2x). Functions accept one argume
 
 ## Deployment
 
-Gradient Explorer is prepared for deployment on **Streamlit Community Cloud**.
+The public application is deployed on **Streamlit Community Cloud**:
 
-- Deployment guide: [docs/deployment.md](docs/deployment.md)
-- Repository: [GitHub](https://github.com/CodingBunny06/Gradient-Explorer)
-
-The public app URL will be added here after deployment and smoke testing are complete.
+- **Live app:** [gradient-explorer.streamlit.app](https://gradient-explorer.streamlit.app/)
+- **Deployment guide:** [docs/deployment.md](docs/deployment.md)
+- **Repository:** [GitHub](https://github.com/CodingBunny06/Gradient-Explorer)
 
 ## Run locally
 
-Python 3.12 is used by the CI workflow.
+Python 3.12 is used by the CI workflow and the Streamlit Community Cloud deployment.
 
 ```bash
 git clone https://github.com/CodingBunny06/Gradient-Explorer.git
