@@ -1,170 +1,117 @@
-
 # System Architecture
 
 ## Gradient Explorer
 
 ## 1. Overview
 
-Gradient Explorer is an interactive mathematical visualisation application designed to demonstrate the concept of gradients and steepest ascent on a surface.
+Gradient Explorer is a Streamlit application for exploring scalar functions of two variables. It validates mathematical input, calculates symbolic and numerical gradient properties, and visualises the function over a selected coordinate window.
 
-The application accepts a mathematical function of two variables, evaluates it at a selected point and presents mathematical and graphical results.
-
-The project uses Python, SymPy, NumPy, Matplotlib and Streamlit.
-
-## 2. Technology Stack
+## 2. Technology stack
 
 | Technology | Purpose |
 |---|---|
-| Python | Core programming language |
-| Streamlit | Interactive user interface |
-| SymPy | Symbolic mathematics and differentiation |
-| NumPy | Numerical operations and coordinate calculations |
-| Matplotlib | Mathematical visualisations |
+| Python | Core application |
+| Streamlit | User interface |
+| SymPy | Parsing output, symbolic differentiation, and evaluation |
+| NumPy | Numerical coordinate grids |
+| Matplotlib | Contour, heatmap, vector-field, and surface plots |
 | Pytest | Automated testing |
-| Git and GitHub | Version control and collaboration |
-| GitHub Actions | Continuous integration and automated testing |
+| GitHub Actions | Continuous integration |
 
-## 3. Project Structure
+## 3. Project structure
 
 ```text
 Gradient-Explorer/
-│
-├── .github/
-│   └── workflows/
-│       └── tests.yml
-│
+├── .github/workflows/tests.yml
 ├── tests/
+│   ├── test_calculations.py
 │   └── test_equation_parser.py
-│
 ├── docs/
+│   ├── architecture.md
 │   ├── math_test_cases.md
-│   └── architecture.md
-│
+│   └── project_report.md
 ├── app.py
-├── equation_parser.py
 ├── calculations.py
+├── equation_parser.py
 ├── visualizations.py
-│
-├── README.md
 ├── requirements.txt
-└── .gitignore
+└── README.md
 ```
 
-Note: `calculations.py` and `visualizations.py` represent planned modules and will be added when their implementations are ready.
+## 4. Module responsibilities
 
-## 4. Module Responsibilities
+### app.py — Presentation layer
+- Collects the function, coordinates, and plot range.
+- Invokes validation and calculation services.
+- Displays symbolic and numerical results.
+- Renders contour, heatmap, and 3D surface tabs.
+- Presents domain and zero-gradient feedback.
 
-### 4.1 app.py — Application Interface
+### equation_parser.py — Input boundary
+- Parses Python expression syntax into an AST.
+- Allows only explicitly supported variables, constants, functions, and operators.
+- Enforces input length, AST node count, nesting depth, and exponent bounds.
+- Converts the approved syntax into SymPy expressions without eval.
 
-Responsible for:
-- Displaying the Streamlit interface.
-- Accepting mathematical function input.
-- Accepting x and y coordinates.
-- Triggering equation validation and calculations.
-- Displaying mathematical results.
-- Integrating visualisation components.
+### calculations.py — Mathematical engine
+- Computes symbolic partial derivatives.
+- Evaluates the function and gradient at a finite real coordinate pair.
+- Calculates gradient magnitude and unit ascent direction.
+- Represents a zero-gradient direction as None rather than dividing by zero.
+- Calculates directional derivatives along normalized user-supplied vectors.
+- Raises CalculationError for undefined, non-finite, or non-real point evaluations.
 
-### 4.2 equation_parser.py — Equation Validation
+### visualizations.py — Graphical engine
+- Builds coordinate grids with NumPy.
+- Evaluates expressions and derivatives through SymPy lambdify.
+- Masks non-finite values in plots.
+- Generates a contour map with sampled gradient arrows and selected point.
+- Generates a heatmap and a 3D surface plot.
 
-Responsible for:
-- Validating user-entered mathematical expressions.
-- Restricting input to supported variables, constants and functions.
-- Converting validated expressions into SymPy expressions.
-- Rejecting unsupported or unsafe syntax.
+### tests/ — Quality checks
+- Verifies parser allowlisting and rejected syntax.
+- Checks reference gradient cases, derivatives, magnitude, unit direction, directional derivatives, and invalid domains.
 
-### 4.3 calculations.py — Mathematical Engine
-
-Planned responsibilities:
-- Calculating partial derivatives.
-- Evaluating gradient components.
-- Calculating gradient magnitude.
-- Calculating unit gradient vectors.
-- Handling zero-gradient and undefined cases.
-
-### 4.4 visualizations.py — Graphical Engine
-
-Planned responsibilities:
-- Generating contour plots.
-- Generating heatmaps.
-- Displaying gradient vectors.
-- Representing the function surface and its mathematical behaviour.
-
-### 4.5 tests/ — Automated Testing
-
-Responsible for:
-- Testing equation parsing and validation.
-- Testing mathematical calculations.
-- Checking expected outputs and edge cases.
-- Preventing regressions during development.
-
-### 4.6 docs/ — Project Documentation
-
-Contains:
-- Mathematical test specifications.
-- System architecture.
-- Project report and technical documentation.
-
-## 5. Application Data Flow
-
-The planned application workflow is:
-
-1. User enters a mathematical function.
-2. The application sends the input to the equation parser.
-3. The parser validates the expression and converts it into a SymPy expression.
-4. The mathematical engine calculates partial derivatives and gradient properties.
-5. The visualisation engine generates graphical representations.
-6. Streamlit displays the mathematical and graphical results.
-
-## 6. Conceptual Architecture Diagram
+## 5. Data flow
 
 ```text
-              USER
-                |
-                v
-        STREAMLIT INTERFACE
-              app.py
-                |
-                v
-        EQUATION VALIDATION
-          equation_parser.py
-                |
-                v
-        MATHEMATICAL ENGINE
-           calculations.py
-                |
-                v
-        VISUALISATION ENGINE
-          visualizations.py
-                |
-                v
-        RESULTS DISPLAY
-         Streamlit Interface
+User inputs
+    |
+    v
+Streamlit interface (app.py)
+    |
+    v
+Equation parser (equation_parser.py)
+    |
+    v
+SymPy expression
+    |
+    +------------------------------+
+    |                              |
+    v                              v
+Calculation engine             Visualization engine
+(calculations.py)               (visualizations.py)
+    |                              |
+    +---------------+--------------+
+                    |
+                    v
+             Streamlit results
 ```
 
-The diagram represents the intended architecture. Some modules are still under development.
+## 6. Numerical behaviour and errors
 
-## 7. Testing and Continuous Integration
+Point calculations require finite real coordinates and finite real outputs. Singularities and non-real values at the selected point are reported as calculation errors. A zero gradient is a valid result: its magnitude is zero, while its normalized direction is undefined.
 
-The project uses Pytest for automated testing.
+Plots use a numerical grid and mask invalid values so singular regions do not contaminate the entire figure. Plotting is an approximation over a finite window, while symbolic derivatives are computed by SymPy.
 
-GitHub Actions runs the test suite when changes are pushed to the main branch or submitted through a pull request.
+## 7. Testing and continuous integration
 
-This helps identify errors before changes are merged into the main codebase.
+Pytest validates parser and mathematical behaviour. GitHub Actions installs the declared dependencies and runs the test suite on pushes to main and pull requests targeting main.
 
-## 8. Development Approach
+## 8. Design decisions
 
-The project follows a modular development approach.
-
-Each major responsibility is separated into an independent Python module. This improves maintainability, testing and collaboration.
-
-Feature branches and pull requests are used to manage contributions and protect the main branch.
-
-## 9. Future Scope
-
-Potential future improvements include:
-- Interactive three-dimensional surface plots.
-- Directional derivative calculations.
-- User-controlled gradient visualisation.
-- Additional mathematical functions.
-- Improved graph customisation.
-- Expanded automated test coverage.
+- Keep parsing, calculations, visualisation, and presentation in separate modules.
+- Do not evaluate arbitrary user-supplied Python code.
+- Use symbolic differentiation for exact derivative expressions.
+- Use numerical evaluation only at selected points and across plotting grids.
+- Keep main protected by pull-request review and CI.
